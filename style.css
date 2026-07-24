@@ -219,6 +219,13 @@ nav {
   flex: 1;
 }
 
+.price-tag {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-green);
+  margin: 15px 0;
+}
+
 @media (max-width: 768px) {
   .product-main {
     flex-direction: column;
@@ -250,6 +257,18 @@ nav {
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
+}
+
+.product-card-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.product-price .product-card-buttons {
+  justify-content: flex-start;
 }
 
 .price-tag-small {
