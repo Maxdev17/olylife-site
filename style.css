@@ -277,6 +277,19 @@ nav {
   margin: 10px 0;
 }
 
+.price-discontinued {
+  text-decoration: line-through;
+  text-decoration-color: #B91C1C;
+  text-decoration-thickness: 2px;
+  opacity: 0.7;
+}
+
+.disclaimer-discontinued {
+  color: #B91C1C;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 900px) {
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
