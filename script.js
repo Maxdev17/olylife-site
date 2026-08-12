@@ -36,7 +36,40 @@ if (track) {
 const hamburger = document.querySelector(".hamburger");
 const nav = document.querySelector("nav");
 
-hamburger.addEventListener("click", () => {
-  nav.classList.toggle("open");
-  hamburger.classList.toggle("active");
-});
+if (hamburger && nav) {
+  hamburger.addEventListener("click", () => {
+    nav.classList.toggle("open");
+    hamburger.classList.toggle("active");
+  });
+}
+
+const tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(tag);
+
+let ytPlayers = [];
+
+function onYouTubeIframeAPIReady() {
+  const videoFrames = document.querySelectorAll(
+    ".video-horizontal iframe, .video-horizontal-large iframe, .video-vertical iframe",
+  );
+
+  videoFrames.forEach((frame) => {
+    const player = new YT.Player(frame.id, {
+      events: {
+        onStateChange: onPlayerStateChange,
+      },
+    });
+    ytPlayers.push(player);
+  });
+}
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.PLAYING) {
+    ytPlayers.forEach((player) => {
+      if (player !== event.target) {
+        player.pauseVideo();
+      }
+    });
+  }
+}
