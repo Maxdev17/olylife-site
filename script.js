@@ -73,3 +73,63 @@ function onPlayerStateChange(event) {
     });
   }
 }
+
+const orderForm = document.getElementById("orderForm");
+if (orderForm) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const preselectedProduct = urlParams.get("product");
+
+  if (preselectedProduct) {
+    const productSelect = document.getElementById("order-product");
+    if (productSelect) {
+      Array.from(productSelect.options).forEach((option) => {
+        if (
+          option.value
+            .toLowerCase()
+            .includes(preselectedProduct.toLowerCase().replace(/-/g, " "))
+        ) {
+          option.selected = true;
+        }
+      });
+    }
+  }
+
+  orderForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const product = document.getElementById("order-product").value;
+    const name = document.getElementById("order-name").value;
+    const phone = document.getElementById("order-phone").value;
+    const location = document.getElementById("order-location").value;
+    const notes = document.getElementById("order-notes").value;
+
+    const message =
+      `Hello IMGconcepts! I would like to place an order.\n\n` +
+      `*Product:* ${product}\n` +
+      `*Name:* ${name}\n` +
+      `*Phone:* ${phone}\n` +
+      `*Location:* ${location}` +
+      (notes ? `\n*Notes:* ${notes}` : "");
+
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/2348139285443?text=${encoded}`, "_blank");
+  });
+}
+
+const reviewForm = document.getElementById("reviewForm");
+if (reviewForm) {
+  reviewForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("reviewer-name").value;
+    const product = document.getElementById("reviewer-product").value;
+    const message = document.getElementById("reviewer-message").value;
+
+    const text =
+      `Hello IMGconcepts! Here is my product review.\n\n` +
+      `*Name:* ${name}\n` +
+      `*Product:* ${product}\n` +
+      `*Experience:* ${message}`;
+
+    const encoded = encodeURIComponent(text);
+    window.open(`https://wa.me/2348139285443?text=${encoded}`, "_blank");
+  });
+}
