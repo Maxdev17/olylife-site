@@ -79,20 +79,35 @@ if (orderForm) {
   const urlParams = new URLSearchParams(window.location.search);
   const preselectedProduct = urlParams.get("product");
 
-  if (preselectedProduct) {
-    const productSelect = document.getElementById("order-product");
-    if (productSelect) {
-      Array.from(productSelect.options).forEach((option) => {
-        if (
-          option.value
-            .toLowerCase()
-            .includes(preselectedProduct.toLowerCase().replace(/-/g, " "))
-        ) {
-          option.selected = true;
-        }
-      });
-    }
-  }
+ if (preselectedProduct) {
+   const productSelect = document.getElementById("order-product");
+   if (productSelect) {
+     const normalized = preselectedProduct
+       .toLowerCase()
+       .replace(/-/g, " ")
+       .trim();
+
+     const exactMatches = {
+       "tera p90": "Tera P90 ($1,000",
+       "tera p90 plus": "Tera P90+ ($1,500",
+       "shaken massager": "Shaken Massager ($1000",
+       "vitality wand": "THz Vitality Wand ($600",
+       "a9 smart bamaair": "A9 Smart BamaAir ($500",
+       "galaxy g one": "Galaxy G-One ($500",
+       session: "Tera P90 30-Minute Session",
+     };
+
+     const targetStart = exactMatches[normalized];
+
+     if (targetStart) {
+       Array.from(productSelect.options).forEach((option) => {
+         if (option.value.startsWith(targetStart)) {
+           option.selected = true;
+         }
+       });
+     }
+   }
+ }
 
   orderForm.addEventListener("submit", (e) => {
     e.preventDefault();
